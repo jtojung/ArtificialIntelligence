@@ -2,32 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class MoveWithinBounds1 : MonoBehaviour {
 
-
-public class MoveWithinBounds : MonoBehaviour
-{
     public float moveSpeed = 15f;
     public float zoomSpeed = 20f;
-    public CameraBounds camBounds;
+    public CameraBounds comBounds;
 
-    // Update is called once per frame
-    void LateUpdate()
-    {
+	
+	
+	// Update is called once per frame
+	void LateUpdate () {
         // Move the camera left + right
         float inputH = Input.GetAxis("Horizontal");
         float inputV = Input.GetAxis("Vertical");
         Vector3 inputDir = new Vector3(inputH, 0, inputV);
         // position += (direction x speed) x deltaTime
         //                      |
-        //                      v
+        //                      V
         //                    Velocity     x deltaTime
         transform.position += inputDir * moveSpeed * Time.deltaTime;
         // Zoom the camera in + out
-        // inputScroll gives you back either -1, 1 or 0 (if you're not pressing anything)
+        // inputScroll gives you back either -1,1 or 0
         float inputScroll = Input.GetAxis("Mouse ScrollWheel");
-        // += - appending position
+        // +=- appending position
         transform.position += transform.forward * inputScroll * zoomSpeed * Time.deltaTime;
         // Cap the position to stay within camera bounds
-        transform.position = camBounds.GetAdjustedPositon(transform.position);
-    }
+        transform.position = comBounds.GetAdjustedPositon(transform.position);
+
+	}
 }
