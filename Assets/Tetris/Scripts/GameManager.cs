@@ -1,16 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
+namespace Tetris
+{
+    public class GameManager : MonoBehaviour
+    {
+        public UnityEvent onGameOver;
+        public bool gameOver = false;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        public static GameManager Instance = null;
+        void Awake()
+        {
+            if (Instance == null)
+                Instance = this;
+        }
+
+        public void GameOver()
+        {
+            gameOver = true;
+            // If there are functions subscribed
+            if (onGameOver != null)
+            {
+                // Invoke all subscribed functions
+                onGameOver.Invoke();
+            }
+        }
+
+        public void ResetGame()
+        {
+            Scene currentScene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(currentScene.name);
+        }
+    }
 }
